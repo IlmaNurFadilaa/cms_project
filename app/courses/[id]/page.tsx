@@ -39,6 +39,7 @@ export default async function CourseDetail({ params }: PageProps) {
   if (!course) notFound();
 
   const isEnrolled = !!(user && course.enrollments.length > 0);
+  
   let isCompleted = false;
 
   if (isEnrolled && user) {
