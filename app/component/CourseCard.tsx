@@ -58,14 +58,14 @@ export default function CourseCard({ course, user, isEnrolled, isCompleted = fal
         </Link>
         
         <div className="mt-auto pt-4">
-          {/* === LOGIKA STYLE DI SINI === */}
+          
           {isEnrolled ? (
              <Link href={`/courses/${course.id}`}>
                 <button className={`w-full py-3 rounded-xl font-bold transition flex items-center justify-center gap-2 ${
                   isCompleted 
-                    // STYLE SELESAI: Hijau Pucat + Border Hijau (Sesuai Gambar)
+                    // 'SELESAI' : Hijau Pucat + Border Hijau 
                     ? "bg-green-50 text-green-600 border border-green-500 cursor-default" 
-                    // STYLE LANJUT: Hijau Solid (Sesuai Gambar)
+                    // 'LANJUT' : Hijau Solid
                     : "bg-green-500 text-white hover:bg-green-600 hover:shadow-lg shadow-green-200" 
                 }`}>
                    {isCompleted ? (
@@ -82,7 +82,6 @@ export default function CourseCard({ course, user, isEnrolled, isCompleted = fal
                 </button>
              </Link>
           ) : (
-            // Jika Belum Enroll, Tombol Biru Default
             <CourseCardButton 
               courseId={course.id} 
               userId={safeUserId} 

@@ -6,12 +6,11 @@ import { HiPencil } from 'react-icons/hi';
 import GenericDeleteButton from '@/app/component/AdminDeleteButton'; 
 import { deleteMaterial } from '@/app/actions/admin'; 
 
-// Update Interface: Kita pakai 'any' untuk videoType agar tidak error garis merah
 interface MaterialRowProps {
   material: {
     id: string;
     title: string;
-    videoType: any; // Menggunakan 'any' agar Enum Prisma tidak dianggap error
+    videoType: any; 
   };
   courseId: string;
   index: number;
@@ -19,7 +18,6 @@ interface MaterialRowProps {
 
 export default function MaterialRow({ material, courseId, index }: MaterialRowProps) {
 
-  // URL detail preview (admin view)
   const detailUrl = `/admin/courses/${courseId}/materials/${material.id}`;
 
   const handleDeleteWrapper = async (id: string) => {
@@ -38,13 +36,13 @@ export default function MaterialRow({ material, courseId, index }: MaterialRowPr
         #{index + 1}
       </td>
 
-      {/* Kolom Judul (DESKRIPSI SUDAH DIHAPUS) */}
+      {/* Kolom Judul */}
       <td className="p-4 align-middle">
         <div className="flex flex-col">
           <Link href={detailUrl} className="font-bold text-[#2e385b] hover:text-blue-600 hover:underline transition w-fit">
             {material.title}
           </Link>
-          {/* Bagian deskripsi di sini sudah dihapus */}
+          
         </div>
       </td>
 
@@ -55,7 +53,7 @@ export default function MaterialRow({ material, courseId, index }: MaterialRowPr
             ? 'bg-red-50 text-red-600 border-red-100' 
             : 'bg-blue-50 text-blue-600 border-blue-100'
         }`}>
-          {/* String() memastikan enum terender sebagai teks biasa */}
+          
           {String(material.videoType)}
         </span>
       </td>

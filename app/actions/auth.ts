@@ -11,7 +11,7 @@ import { join } from 'path';
 export async function loginAction(formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
-  const callbackUrl = (formData.get('callbackUrl') as string) || '/'; // Tangkap tujuan balik
+  const callbackUrl = (formData.get('callbackUrl') as string) || '/'; 
 
   const user = await prisma.user.findUnique({
     where: { email },
@@ -95,7 +95,5 @@ export async function registerAction(formData: FormData) {
 export async function logout() {
   const cookieStore = await cookies();
   cookieStore.delete('session');
-  // Tidak perlu redirect di sini jika ingin ditangani oleh komponen, 
-  // tapi biarkan saja agar aman.
   redirect('/auth');
 }

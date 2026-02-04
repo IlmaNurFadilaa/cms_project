@@ -4,23 +4,21 @@ import CourseCard from '../component/CourseCard';
 import { getSessionUser } from '../lib/auth';
 import Footer from '../component/Footer';
 
-export const dynamic = 'force-dynamic'; // Agar data selalu fresh
+export const dynamic = 'force-dynamic'; 
 
 export default async function CoursesPage() {
   const user = await getSessionUser();
 
-  // 1. Fetch Raw Data
   const rawCourses = await prisma.course.findMany({
     orderBy: { createdAt: 'desc' },
     include: {
       category: true,
       enrollments: user ? { where: { userId: user.id } } : false,
-      materials: { select: { id: true } }, // WAJIB
+      materials: { select: { id: true } }, 
     },
     where: { isPublished: true }
   });
 
-  // 2. Hitung Progress
   const courses = await Promise.all(rawCourses.map(async (course) => {
     let isCompleted = false;
     if (user && course.enrollments.length > 0) {

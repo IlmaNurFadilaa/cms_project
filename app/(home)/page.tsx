@@ -2,26 +2,25 @@ import React from 'react';
 import Footer from '../component/Footer';
 import { prisma } from '../lib/prisma'; 
 import Link from 'next/link';
-import Image from 'next/image'; 
 import { getSessionUser } from '../lib/auth'; 
 import CourseCard from '../component/CourseCard';
 
 const Home = async () => {
   const user = await getSessionUser(); 
 
-  // 1. AMBIL DATA RAW DULU
+  // AMBIL DATA RAW
   const rawCourses = await prisma.course.findMany({
     take: 3, 
     orderBy: { createdAt: 'desc' },
     include: {
       category: true,
       enrollments: user ? { where: { userId: user.id } } : false,
-      materials: { select: { id: true } }, // <--- WAJIB: Ambil ID Materi buat dihitung
+      materials: { select: { id: true } }, 
     },
     where: { isPublished: true }
   });
 
-  // 2. HITUNG PROGRESS MANUAL (Promise.all)
+  // HITUNG PROGRESS MANUAL (Promise.all)
   const courses = await Promise.all(rawCourses.map(async (course) => {
     let isCompleted = false;
 
@@ -50,7 +49,7 @@ const Home = async () => {
   return (
     <div className="bg-white min-h-screen flex flex-col scroll-smooth">
       
-      {/* === HERO SECTION (TIDAK BERUBAH) === */}
+      {/* === HERO SECTION === */}
       <section className="max-w-7xl px-4 mx-auto py-16 mt-20 text-black">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-center">
           <div className="lg:col-span-3 text-center lg:text-left">
@@ -73,7 +72,7 @@ const Home = async () => {
         </div>
       </section>
 
-      {/* === ABOUT SECTION (TIDAK BERUBAH) === */}
+      {/* === ABOUT SECTION === */}
       <section id="about" className="bg-gray-100 py-20 scroll-mt-20">
         <div className="max-w-4xl mx-auto px-4 text-gray-900">
           <p className="text-center text-blue-600 font-bold mb-2 uppercase tracking-wide">About Us</p>
@@ -95,7 +94,7 @@ const Home = async () => {
         </div>
       </section>
 
-      {/* === POPULAR CLASSES SECTION (LOGIC DIPERBARUI) === */}
+      {/* === POPULAR CLASSES SECTION === */}
       <section className="bg-[#f8faff] py-24">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -110,7 +109,7 @@ const Home = async () => {
                 course={course} 
                 user={user} 
                 isEnrolled={user ? course.enrollments.length > 0 : false}
-                isCompleted={course.isCompleted} // <--- KIRIM DATA isCompleted KE CARD
+                isCompleted={course.isCompleted} 
               />
             ))}
           </div>

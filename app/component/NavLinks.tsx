@@ -9,24 +9,20 @@ export default function NavLinks() {
   const [activeId, setActiveId] = useState('home');
 
   useEffect(() => {
-    // 1. LOGIKA UNTUK HALAMAN COURSE (Terpisah)
+    
     if (pathname.startsWith('/courses')) {
       setActiveId('course');
-      return; // Stop, jangan jalankan scroll spy home
+      return; 
     }
 
-    // 2. LOGIKA SCROLL SPY UNTUK HALAMAN HOME
     if (pathname === '/') {
       const handleScroll = () => {
         const aboutSection = document.getElementById('about');
         const contactSection = document.getElementById('contact');
         
-        // Posisi scroll saat ini + offset (biar ganti aktifnya pas tengah layar)
         const scrollPosition = window.scrollY + 200; 
-
-        // Logika Cek Posisi (Urutan Cek: Dari Bawah ke Atas)
         
-        // Cek Contact (Footer)
+        // Cek Contact
         if (contactSection && contactSection.offsetTop <= scrollPosition) {
             setActiveId('contact');
         } 
@@ -34,26 +30,23 @@ export default function NavLinks() {
         else if (aboutSection && aboutSection.offsetTop <= scrollPosition) {
             setActiveId('about');
         } 
-        // Sisanya dianggap Home (Hero Section)
+        // Sisanya dianggap Home 
         else {
             setActiveId('home');
         }
       };
 
-      // Pasang Event Listener
       window.addEventListener('scroll', handleScroll);
-      // Panggil sekali biar langsung update saat refresh
+      
       handleScroll(); 
       
       return () => window.removeEventListener('scroll', handleScroll);
     } else {
-        // Jika di halaman lain (misal login), matikan semua active state
         setActiveId('');
     }
 
   }, [pathname]);
 
-  // Helper untuk class active
   const getLinkClass = (id: string) => {
     return activeId === id 
       ? "text-[#2e385b] font-bold border-b-2 border-[#2e385b] pb-1 cursor-pointer"
@@ -72,7 +65,7 @@ export default function NavLinks() {
         About
       </Link>
       
-      {/* COURSE (Halaman Terpisah) */}
+      {/* COURSE */}
       <Link href="/courses" className={getLinkClass('course')}>
         Course
       </Link>

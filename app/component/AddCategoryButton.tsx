@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useState, useEffect, useActionState } from 'react'; // 1. Import dari 'react'
+import React, { useState, useEffect, useActionState } from 'react'; 
 import { HiPlus, HiX } from 'react-icons/hi';
 import { useFormStatus } from 'react-dom'; 
 import { createCategory } from '@/app/actions/categories';
 
-// Komponen Tombol Submit
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
@@ -22,11 +21,8 @@ function SubmitButton() {
 export default function AddCategoryButton() {
   const [isOpen, setIsOpen] = useState(false);
   
-  // 2. Ganti useFormState menjadi useActionState
-  // Struktur return-nya: [state, formAction, isPending]
   const [state, formAction] = useActionState(createCategory, null);
 
-  // Efek untuk menutup modal jika berhasil disimpan
   useEffect(() => {
     if (state?.success) {
       setIsOpen(false);

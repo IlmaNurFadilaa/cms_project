@@ -5,19 +5,18 @@ import { redirect } from 'next/navigation';
 import { prisma } from '@/app/lib/prisma';
 import { getSessionUser } from '@/app/lib/auth';
 import Footer from '@/app/component/Footer';
-import { HiCheckCircle, HiBookOpen } from 'react-icons/hi'; // Tambah icon
+import { HiCheckCircle, HiBookOpen } from 'react-icons/hi'; 
 
 export default async function MyLearningPage() {
   const user = await getSessionUser();
   if (!user) redirect('/auth');
 
-  // 1. AMBIL DATA
   const enrollments = await prisma.enrollment.findMany({
     where: { userId: user.id },
     include: {
       course: {
         include: {
-          category: true, // Ambil kategori juga biar lengkap
+          category: true, 
           materials: {
             select: { id: true } 
           },
@@ -27,7 +26,6 @@ export default async function MyLearningPage() {
     }
   });
 
-  // 2. AMBIL PROGRESS
   const progressData = await prisma.userProgress.findMany({
     where: { userId: user.id, isCompleted: true },
     select: { materialId: true }
@@ -41,7 +39,6 @@ export default async function MyLearningPage() {
       <main className="flex-1 max-w-7xl mx-auto px-6 py-12 w-full mt-16">
         
         {/* === HEADER STYLE CATALOG (CENTERED) === */}
-        {/* Bagian ini yang saya ubah agar mirip Katalog */}
         <div className="text-center mb-12 mt-4">
           <p className="text-sm font-bold text-gray-500 mb-2 uppercase tracking-wide">
             Dashboard Siswa
@@ -50,7 +47,6 @@ export default async function MyLearningPage() {
             Pembelajaran Saya
           </h1>
         </div>
-        {/* =========================================== */}
 
         {enrollments.length === 0 ? (
            <div className="text-center py-20 bg-gray-50 rounded-3xl border border-dashed border-gray-300">
@@ -75,6 +71,7 @@ export default async function MyLearningPage() {
 
                 return (
                   <div key={course.id} className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
+                     
                      {/* Gambar */}
                      <div className="relative h-48 bg-gray-200 overflow-hidden">
                         {course.image ? (

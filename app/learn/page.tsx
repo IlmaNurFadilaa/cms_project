@@ -14,7 +14,6 @@ export default async function MyLearningPage() {
     redirect('/auth');
   }
 
-  // QUERY BARU: Ambil Enrollment User
   const enrollments = await prisma.enrollment.findMany({
     where: {
       userId: user.id
@@ -41,7 +40,7 @@ export default async function MyLearningPage() {
         </div>
 
         {enrollments.length === 0 ? (
-           // TAMPILAN KOSONG
+         
            <div className="bg-gray-50 rounded-[40px] border border-dashed border-gray-300 p-12 text-center max-w-2xl mx-auto">
               <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6 text-gray-400 text-3xl">
                  <HiBookOpen />
@@ -57,7 +56,7 @@ export default async function MyLearningPage() {
               </Link>
            </div>
         ) : (
-           // TAMPILAN LIST KURSUS
+         
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {enrollments.map((enrollment) => {
                  const course = enrollment.course;

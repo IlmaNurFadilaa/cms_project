@@ -9,7 +9,7 @@ import { HiCheckCircle, HiExclamation } from 'react-icons/hi';
 
 interface Props {
   courseId: string;
-  userId?: string | null; // Update tipe data agar lebih jelas
+  userId?: string | null; 
   isEnrolled: boolean;
 }
 
@@ -23,11 +23,9 @@ export default function CourseCardButton({ courseId, userId, isEnrolled }: Props
     setMounted(true);
   }, []);
 
-  // --- LOGIC FIX: Validasi ketat User ID ---
-  // Kita pastikan userId benar-benar valid (bukan string kosong, bukan string 'undefined', bukan null)
   const isValidUser = userId && userId !== 'undefined' && userId !== 'null' && userId.trim() !== '';
 
-  // 1. GUEST: Jika user tidak valid -> Paksa tombol Login
+  // GUEST: Jika user tidak valid -> Paksa tombol Login
   if (!isValidUser) {
     return (
       <Link 
@@ -41,7 +39,7 @@ export default function CourseCardButton({ courseId, userId, isEnrolled }: Props
     );
   }
 
-  // 2. MEMBER: Jika user valid DAN sudah enroll -> Tombol Lanjut Belajar
+  // MEMBER: Jika user valid DAN sudah enroll -> Tombol Lanjut Belajar
   if (isEnrolled) {
     return (
       <Link href={`/learn/${courseId}`} className="block w-full">
@@ -52,10 +50,10 @@ export default function CourseCardButton({ courseId, userId, isEnrolled }: Props
     );
   }
 
-  // 3. MEMBER: Jika user valid TAPI belum enroll -> Tombol Daftar (Enroll)
+  // MEMBER: Jika user valid TAPI belum enroll -> Tombol Daftar (Enroll)
   const handleEnroll = () => {
     startTransition(async () => {
-      // Pastikan userId dikirim sebagai string yang aman
+      
       const safeUserId = userId || '';
       const result = await enrollCourse(courseId, safeUserId);
       

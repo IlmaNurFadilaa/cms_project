@@ -63,8 +63,7 @@ export default async function CourseDetailPage({
                 ? 'bg-[#e6f6f4] text-[#00a19a] border-[#b5ebe7]' 
                 : 'bg-gray-100 text-gray-500 border-gray-200'
               }`}>
-                {/* SEBELUMNYA: {course.isPublished ? 'Available' : 'Draft'} */}
-                {/* SESUDAHNYA: */}
+                
                 {course.isPublished ? 'Published' : 'Draft'}
               </span>
             </div>
@@ -90,13 +89,11 @@ export default async function CourseDetailPage({
         </div>
       </div>
 
-      {/* --- TABEL MATERI (Bawah) --- */}
       <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8">
         
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-xl font-bold">Daftar Materi</h3>
-          
-          {/* Link Tambah Materi (Pastikan folder 'materials/create' ada di dalam [courseId]) */}
+
           <Link href={`/admin/courses/${courseId}/materials/create`}>
             <button className="bg-[#2e385b] text-white px-5 py-2.5 rounded-xl font-bold hover:bg-[#1e253d] shadow-lg transition text-sm flex items-center gap-2">
               <span>+</span> Tambah Materi

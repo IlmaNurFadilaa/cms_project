@@ -7,11 +7,10 @@ export default function PullToRefresh({ children }: { children: React.ReactNode 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const startY = useRef(0);
 
-  const pullThreshold = 80; // Jarak tarik untuk trigger refresh
+  const pullThreshold = 80; 
 
-  // --- HANYA LOGIKA SENTUH (Mobile) ---
   const handleTouchStart = (e: React.TouchEvent) => {
-    // Hanya aktif jika scroll berada di paling atas
+    
     if (window.scrollY === 0 && !isRefreshing) {
       startY.current = e.touches[0].pageY;
     }
@@ -21,10 +20,10 @@ export default function PullToRefresh({ children }: { children: React.ReactNode 
     if (isRefreshing || window.scrollY > 0) return;
 
     const currentY = e.touches[0].pageY;
-    const distance = (currentY - startY.current) * 0.4; // Efek resistensi
+    const distance = (currentY - startY.current) * 0.4; 
 
     if (distance > 0) {
-      // Memberikan batasan tarikan maksimal agar tidak kebablasan
+      
       setPullDistance(Math.min(distance, 120)); 
     }
   };
@@ -34,9 +33,8 @@ export default function PullToRefresh({ children }: { children: React.ReactNode 
 
     if (pullDistance >= pullThreshold) {
       setIsRefreshing(true);
-      setPullDistance(60); // Tahan posisi icon saat loading
-      
-      // Simulasi refresh halaman
+      setPullDistance(60); 
+
       setTimeout(() => {
         window.location.reload();
       }, 1500);

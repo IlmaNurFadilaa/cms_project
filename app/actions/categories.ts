@@ -2,7 +2,7 @@
 
 import { prisma } from '@/app/lib/prisma';
 import { revalidatePath } from 'next/cache';
-import { generateShortId } from '@/app/lib/id'; // IMPORT HELPER
+import { generateShortId } from '@/app/lib/id'; 
 
 export async function createCategory(prevState: any, formData: FormData) {
   const name = formData.get('name') as string;
@@ -14,7 +14,7 @@ export async function createCategory(prevState: any, formData: FormData) {
   try {
     await prisma.category.create({
       data: { 
-        id: generateShortId(5), // <--- MANUAL ID
+        id: generateShortId(5), 
         name 
       },
     });

@@ -8,7 +8,6 @@ import { CgSpinner } from 'react-icons/cg';
 import { HiCamera, HiUser, HiArrowLeft } from 'react-icons/hi';
 import Link from 'next/link';
 
-// Kita akan buat Server Action di langkah berikutnya
 import { updateProfileAction } from '@/app/actions/profile';
 
 export default function EditProfilePage() {
@@ -29,7 +28,7 @@ export default function EditProfilePage() {
         setErrorMessage(result.error);
       } else {
         router.push('/profile');
-        router.refresh(); // Agar data di navbar/menu berubah
+        router.refresh(); 
       }
     } catch (error) {
       setErrorMessage("Gagal memperbarui profil.");

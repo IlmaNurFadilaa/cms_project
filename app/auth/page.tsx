@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { loginAction, registerAction } from '../actions/auth'; 
 import { HiEye, HiEyeOff } from 'react-icons/hi';
 import { CgSpinner } from 'react-icons/cg'; 
-import { useSearchParams } from 'next/navigation'; // Import search params
+import { useSearchParams } from 'next/navigation'; 
 
 interface InputFieldProps {
   label: string;
@@ -53,7 +53,7 @@ const InputField = ({
 
 const AuthPage = () => {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/'; // Ambil callbackUrl dari browser URL
+  const callbackUrl = searchParams.get('callbackUrl') || '/'; 
 
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);

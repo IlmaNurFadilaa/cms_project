@@ -19,13 +19,11 @@ export default function AdminHeader() {
     }
 
     // TAMBAH MATERI (BARU DITAMBAHKAN)
-    // : Ada kata 'materials' DAN berakhiran '/create'
     if (pathname.includes('/materials/') && pathname.endsWith('/create')) {
         return { title: 'Tambah Materi', desc: 'Upload video pembelajaran baru ke dalam kursus.' };
     }
 
     // DETAIL MATERI
-    // : Ada 'materials', TAPI bukan edit dan bukan create
     if (pathname.includes('/materials/') && !pathname.endsWith('/edit') && !pathname.endsWith('/create')) {
       return { title: 'Detail Materi', desc: 'Preview video dan informasi materi.' };
     }
@@ -43,7 +41,6 @@ export default function AdminHeader() {
     }
 
     // DETAIL COURSE
-    // tikan diawali /admin/courses/, bukan create, bukan edit, DAN BUKAN materi
     if (
       pathname.startsWith('/admin/courses/') && 
       !pathname.endsWith('/create') && 

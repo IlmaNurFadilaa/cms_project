@@ -10,18 +10,15 @@ export default async function LearnRedirectPage({ params }: PageProps) {
   const { courseId } = await params;
   const user = await getSessionUser();
 
-  // 1. Cek Login (Security Layer)
   if (!user) {
     redirect('/auth');
   }
 
-  // 2. Ambil Materi Pertama (Urutan paling awal)
   const firstMaterial = await prisma.material.findFirst({
     where: { courseId },
-    orderBy: { createdAt: 'asc' }, // Urutkan dari yang pertama dibuat
+    orderBy: { createdAt: 'asc' }, 
   });
 
-  // 3. Jika kursus kosong (belum ada materi)
   if (!firstMaterial) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 text-[#2e385b]">
@@ -34,6 +31,5 @@ export default async function LearnRedirectPage({ params }: PageProps) {
     );
   }
 
-  // 4. Redirect ke Materi Pertama
   redirect(`/learn/${courseId}/${firstMaterial.id}`);
 }

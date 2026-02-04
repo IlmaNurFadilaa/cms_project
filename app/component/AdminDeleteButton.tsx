@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, ReactNode, useEffect } from 'react';
-import { createPortal } from 'react-dom'; // Import Portal
+import { createPortal } from 'react-dom'; 
 import { HiTrash, HiExclamation, HiXCircle } from 'react-icons/hi';
 
 interface Props {
@@ -10,9 +10,8 @@ interface Props {
   typeLabel: string;
   onDelete: (id: string) => Promise<{ success: boolean; error?: string }>;
   
-  // PROPS TAMBAHAN AGAR FLEKSIBEL
-  className?: string;      // Untuk mengatur style tombol dari luar
-  children?: ReactNode;    // Untuk mengatur isi tombol (teks/icon) dari luar
+  className?: string;      
+  children?: ReactNode;    
 }
 
 export default function GenericDeleteButton({ 
@@ -24,7 +23,6 @@ export default function GenericDeleteButton({
   const [isDeleting, setIsDeleting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   
-  // State untuk memastikan Portal hanya berjalan di Client side
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

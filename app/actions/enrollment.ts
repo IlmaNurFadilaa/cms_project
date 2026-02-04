@@ -2,7 +2,6 @@
 
 import { prisma } from '@/app/lib/prisma';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
 export async function enrollCourse(courseId: string, userId: string) {
   if (!userId || !courseId) {
@@ -10,7 +9,7 @@ export async function enrollCourse(courseId: string, userId: string) {
   }
 
   try {
-    // 1. Cek apakah user sudah terdaftar (double check server-side)
+    // Cek apakah user sudah terdaftar (double check server-side)
     const existingEnrollment = await prisma.enrollment.findUnique({
       where: {
         userId_courseId: {
@@ -24,7 +23,7 @@ export async function enrollCourse(courseId: string, userId: string) {
       return { success: true, message: 'Sudah terdaftar' };
     }
 
-    // 2. Buat data Enrollment baru
+    // Buat data Enrollment baru
     await prisma.enrollment.create({
       data: {
         userId,
@@ -32,7 +31,7 @@ export async function enrollCourse(courseId: string, userId: string) {
       }
     });
 
-    // 3. Revalidate halaman agar status tombol berubah
+    // Revalidate halaman agar status tombol berubah
     revalidatePath(`/courses/${courseId}`);
     revalidatePath('/my-learning');
 

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { createPortal } from 'react-dom'; // Untuk teleportasi modal
+import { createPortal } from 'react-dom'; 
 import Link from 'next/link';
 import Image from 'next/image';
 import { logout } from '../actions/auth'; 
@@ -17,8 +17,8 @@ interface UserMenuProps {
 }
 
 export default function UserMenu({ user }: UserMenuProps) {
-  const [isOpen, setIsOpen] = useState(false); // Dropdown menu
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false); // Modal Logout
+  const [isOpen, setIsOpen] = useState(false); 
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false); 
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -113,7 +113,7 @@ export default function UserMenu({ user }: UserMenuProps) {
             </div>
 
             <div className="border-t border-gray-100 mt-1 pt-1">
-                {/* GANTI FORM ACTION JADI BUTTON BIASA UNTUK PEMICU MODAL */}
+              
                 <button 
                   onClick={() => {
                     setIsOpen(false);
@@ -129,7 +129,7 @@ export default function UserMenu({ user }: UserMenuProps) {
         </>
       )}
 
-      {/* RENDER MODAL LOGOUT VIA PORTAL */}
+
       {isLogoutModalOpen && mounted && createPortal(<LogoutModal />, document.body)}
     </div>
   );

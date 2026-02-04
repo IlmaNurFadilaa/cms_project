@@ -17,7 +17,7 @@ export default function CompleteButton({ materialId, initialCompleted }: Props) 
 
   const handleToggle = async () => {
     setLoading(true);
-    // Optimistic Update (Ubah UI duluan biar cepet)
+    
     const newState = !isCompleted;
     setIsCompleted(newState);
 

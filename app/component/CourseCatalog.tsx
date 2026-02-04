@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { HiSearch, HiExclamationCircle, HiRefresh, HiPhotograph } from 'react-icons/hi';
-import CourseCardButton from './CourseCardButton'; 
 import CourseCard from './CourseCard';
 
 interface Props {
@@ -105,7 +104,7 @@ export default function CourseCatalog({ initialCourses, categories, userId, dbEr
                      key={course.id} 
                      course={course} 
                      user={{ id: userId }} 
-                     // REVISI: Ambil status enroll dari data database
+                     
                      isEnrolled={course.enrollments?.length > 0} 
                    />
                  ))}

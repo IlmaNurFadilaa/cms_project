@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import { prisma } from '@/app/lib/prisma';
 import { HiPencil, HiCalendar, HiVideoCamera, HiTrash } from 'react-icons/hi';
-// Import komponen universal kita
 import AdminDeleteButton from '@/app/component/AdminDeleteButton';
 import { deleteMaterial } from '@/app/actions/admin'; 
 
@@ -69,6 +68,7 @@ export default async function AdminMaterialDetail({ params }: PageProps) {
         
         {/* KOLOM KIRI: VIDEO PLAYER & DESKRIPSI (Lebar 8/12) */}
         <div className="lg:col-span-8 flex flex-col gap-8">
+
             {/* Video Player */}
             <div className="bg-black rounded-[32px] overflow-hidden shadow-xl aspect-video relative border border-gray-800 z-10">
               {material.videoType === 'YOUTUBE' ? (
@@ -150,7 +150,7 @@ export default async function AdminMaterialDetail({ params }: PageProps) {
                      </button>
                   </Link>
 
-                  {/* Tombol Hapus: Menggunakan AdminDeleteButton yang sudah di-custom style-nya */}
+                  {/* Tombol Hapus */}
                   <div className="w-full">
                       <AdminDeleteButton 
                         id={material.id} 
@@ -158,7 +158,6 @@ export default async function AdminMaterialDetail({ params }: PageProps) {
                         typeLabel="Materi" 
                         onDelete={handleDeleteAction}
                         
-                        // DI SINI KITA UBAH STYLE MENJADI TOMBOL BESAR
                         className="w-full flex items-center justify-center gap-3 py-4 rounded-xl bg-red-50 text-red-600 font-bold hover:bg-red-600 hover:text-white transition-all duration-300 group shadow-sm border border-red-100"
                       >
                          {/* DI SINI KITA ISI KONTEN CUSTOM */}

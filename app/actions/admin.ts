@@ -3,12 +3,11 @@
 import { prisma } from '@/app/lib/prisma';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { Level, VideoType } from '@prisma/client';
-import { Role } from '@prisma/client';
+import { Level, VideoType, Role } from '@prisma/client';
 import { writeFile, mkdir } from 'fs/promises'; 
 import { join } from 'path';
 import { hash } from 'bcrypt';
-import { generateShortId } from '@/app/lib/id'; // <--- 1. TAMBAHKAN IMPORT INI
+import { generateShortId } from '@/app/lib/id'; 
 
 // --- CREATE COURSE ---
 export async function createCourse(formData: FormData) {
@@ -35,7 +34,7 @@ export async function createCourse(formData: FormData) {
 
   await prisma.course.create({
     data: { 
-        id: generateShortId(), // <--- 2. TAMBAHKAN INI (Create ID Manual)
+        id: generateShortId(), 
         title, 
         description, 
         categoryId, 
@@ -49,7 +48,7 @@ export async function createCourse(formData: FormData) {
   redirect('/admin/courses');
 }
 
-// --- UPDATE COURSE (Tidak perlu ubah ID) ---
+// --- UPDATE COURSE ---
 export async function updateCourse(formData: FormData) {
   const id = formData.get('id') as string;
   const title = formData.get('title') as string;
@@ -116,7 +115,7 @@ export async function createMaterial(formData: FormData) {
 
   await prisma.material.create({
     data: {
-      id: generateShortId(), // <--- 3. TAMBAHKAN INI
+      id: generateShortId(), 
       courseId,
       title,
       description,
@@ -129,7 +128,7 @@ export async function createMaterial(formData: FormData) {
   redirect(`/admin/courses/${courseId}`);
 }
 
-// --- UPDATE MATERIAL (Tidak perlu ubah ID) ---
+// --- UPDATE MATERIAL ---
 export async function updateMaterial(formData: FormData) {
   const id = formData.get('id') as string;
   const courseId = formData.get('courseId') as string;
@@ -190,7 +189,7 @@ export async function createUser(formData: FormData) {
 
   await prisma.user.create({
     data: {
-      id: generateShortId(), // <--- 4. TAMBAHKAN INI
+      id: generateShortId(), 
       name,
       email,
       password: hashedPassword,
@@ -203,7 +202,7 @@ export async function createUser(formData: FormData) {
   redirect('/admin/users');
 }
 
-// --- UPDATE USER (Tidak perlu ubah ID) ---
+// --- UPDATE USER ---
 export async function updateUser(formData: FormData) {
   const id = formData.get('id') as string;
   const name = formData.get('name') as string;

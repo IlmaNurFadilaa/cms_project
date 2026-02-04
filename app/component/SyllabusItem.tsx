@@ -24,7 +24,6 @@ export default function SyllabusItem({ courseId, material, index, isEnrolled, us
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
-  // --- 1. TAMPILAN JIKA SUDAH ENROLL (Link Biasa) ---
   if (isEnrolled) {
     return (
       <Link href={`/learn/${courseId}/${material.id}`}>
@@ -48,12 +47,10 @@ export default function SyllabusItem({ courseId, material, index, isEnrolled, us
       </Link>
     );
   }
-
-  // --- 2. LOGIC JIKA BELUM ENROLL (Modal Trigger) ---
   
   const handleEnroll = () => {
     if (!userId) {
-       router.push('/auth'); // Lempar ke login jika belum login
+       router.push('/auth'); 
        return;
     }
 
@@ -61,7 +58,7 @@ export default function SyllabusItem({ courseId, material, index, isEnrolled, us
       const result = await enrollCourse(courseId, userId);
       if (result.success) {
         setIsOpen(false);
-        router.push(`/learn/${courseId}`); // Masuk ke player setelah sukses
+        router.push(`/learn/${courseId}`); 
       } else {
         alert(result.message || 'Gagal mendaftar');
       }
@@ -70,12 +67,12 @@ export default function SyllabusItem({ courseId, material, index, isEnrolled, us
 
   return (
     <>
-      {/* Tampilan Item (Diklik muncul Modal) */}
+    
       <div 
         onClick={() => setIsOpen(true)}
         className="bg-gray-50 p-6 rounded-2xl border border-gray-100 hover:bg-white hover:shadow-md hover:border-gray-300 transition-all cursor-pointer h-full group relative opacity-80 hover:opacity-100"
       >
-         {/* Icon Gembok (Visual Cue bahwa ini terkunci) */}
+        
          <div className="absolute top-4 right-4 text-gray-300 group-hover:text-gray-500">
             <HiLockClosed size={20} />
          </div>
@@ -93,7 +90,7 @@ export default function SyllabusItem({ courseId, material, index, isEnrolled, us
          </ul>
       </div>
 
-      {/* --- MODAL KONFIRMASI (Sama seperti tombol utama) --- */}
+      {/* --- MODAL KONFIRMASI --- */}
       {isOpen && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-[#2e385b]/50 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white w-full max-w-md rounded-[32px] p-8 shadow-2xl scale-100 animate-in zoom-in-95 duration-200">

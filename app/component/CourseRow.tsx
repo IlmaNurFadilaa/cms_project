@@ -21,7 +21,7 @@ export default function CourseRow({ course }: CourseRowProps) {
   return (
     <tr 
       onClick={handleRowClick}
-      className="hover:bg-blue-50/50 transition-colors border-b border-gray-50 last:border-0 cursor-pointer group" // Tambah cursor-pointer
+      className="hover:bg-blue-50/50 transition-colors border-b border-gray-50 last:border-0 cursor-pointer group" 
     >
 
       <td className="p-4">

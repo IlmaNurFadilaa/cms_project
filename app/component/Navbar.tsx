@@ -21,11 +21,10 @@ export default function Navbar({ user = null }: NavbarProps) {
     setMounted(true);
   }, []);
 
-  // --- LOGIC REVISI: Sembunyikan Navbar di Admin, Auth, dan Edit Profil ---
   const isHiddenPage = pathname && (
     pathname.startsWith('/admin') || 
     pathname.startsWith('/auth') || 
-    pathname.startsWith('/profile/edit') // <-- Tambahkan baris ini
+    pathname.startsWith('/profile/edit') 
   );
 
   if (isHiddenPage) {

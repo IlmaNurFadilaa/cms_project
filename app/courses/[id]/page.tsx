@@ -10,7 +10,6 @@ import Footer from '@/app/component/Footer';
 import CourseCardButton from '@/app/component/CourseCardButton'; 
 import SyllabusItem from '@/app/component/SyllabusItem';
 
-// IMPORT ICON TAMBAHAN
 import { HiDocumentText, HiAcademicCap, HiTag, HiCheckCircle, HiPlay } from 'react-icons/hi';
 
 interface PageProps {
@@ -21,8 +20,6 @@ export default async function CourseDetail({ params }: PageProps) {
   const { id } = await params;
   const user = await getSessionUser();
 
-  // 1. Ambil Data Kursus Sekaligus Enrollment
-  // Kita include enrollments di sini biar efisien (sekali query)
   const course = await prisma.course.findUnique({
     where: { id },
     include: {
@@ -41,16 +38,14 @@ export default async function CourseDetail({ params }: PageProps) {
 
   if (!course) notFound();
 
-  // 2. Logic Status: Enrolled & Completed
-  const isEnrolled = user && course.enrollments.length > 0;
+  const isEnrolled = !!(user && course.enrollments.length > 0);
   let isCompleted = false;
 
-  // 3. Hitung Progress jika sudah Enroll
   if (isEnrolled && user) {
       const totalMaterials = course.materials.length;
       
       if (totalMaterials > 0) {
-        // Hitung berapa materi yang sudah status 'isCompleted: true'
+        
         const completedCount = await prisma.userProgress.count({
           where: {
             userId: user.id,
@@ -59,7 +54,6 @@ export default async function CourseDetail({ params }: PageProps) {
           }
         });
 
-        // Jika jumlah materi selesai sama dengan total materi, berarti TAMAT
         if (completedCount === totalMaterials) {
           isCompleted = true;
         }
@@ -71,7 +65,6 @@ export default async function CourseDetail({ params }: PageProps) {
 
       <main className="flex-1 max-w-7xl mx-auto px-6 py-12 w-full mt-16">
         
-        {/* Breadcrumb */}
         <nav className="text-sm text-gray-400 mb-6 font-medium">
           <Link href="/" className="hover:text-[#2e385b] transition">Home</Link>
           <span className="mx-2">/</span>
@@ -80,7 +73,6 @@ export default async function CourseDetail({ params }: PageProps) {
           <span className="text-[#2e385b] font-bold">{course.title}</span>
         </nav>
 
-        {/* Header Judul */}
         <header className="mb-10">
           <h1 className="text-3xl md:text-4xl font-extrabold mb-3 tracking-tight">
             {course.title}
@@ -89,10 +81,8 @@ export default async function CourseDetail({ params }: PageProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
           
-          {/* KOLOM KIRI (KONTEN UTAMA) */}
           <div className="lg:col-span-2 space-y-12">
             
-            {/* Hero Image */}
             <div className="relative w-full h-[300px] md:h-[400px] rounded-3xl overflow-hidden shadow-sm border border-gray-100">
                {course.image ? (
                   <Image 
@@ -109,14 +99,12 @@ export default async function CourseDetail({ params }: PageProps) {
                )}
             </div>
 
-            {/* Deskripsi */}
             <section>
               <div className="prose max-w-none text-gray-600 leading-relaxed whitespace-pre-line">
                   {course.description}
               </div>
             </section>
 
-            {/* Silabus */}
             <section>
               <h2 className="text-2xl font-bold mb-6">Apa yang akan pelajari (Silabus)</h2>
               
@@ -140,7 +128,6 @@ export default async function CourseDetail({ params }: PageProps) {
               )}
             </section>
             
-            {/* Komentar */}
             <section>
               <h2 className="text-2xl font-bold mb-6">Komentar dari Pembelajar</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -159,7 +146,6 @@ export default async function CourseDetail({ params }: PageProps) {
             </section>
           </div>
 
-          {/* KOLOM KANAN (SIDEBAR STICKY) */}
           <aside className="lg:col-span-1 h-full">
             <div className="sticky top-28 z-10 bg-gray-100 p-6 rounded-3xl border border-gray-200 shadow-sm">
               
@@ -170,17 +156,13 @@ export default async function CourseDetail({ params }: PageProps) {
                 </span>
               </div>
 
-              {/* === LOGIC TOMBOL SIDEBAR DIMULAI === */}
               <div className="mb-8">
                  {isEnrolled ? (
-                    // 1. JIKA SUDAH DAFTAR
                     <button 
                       disabled={isCompleted} 
                       className={`w-full py-4 rounded-xl font-bold transition flex items-center justify-center gap-2 shadow-sm ${
                         isCompleted 
-                          // STYLE KURSUS SELESAI (Hijau Pucat + Border Hijau)
                           ? "bg-green-50 text-green-600 border border-green-500 cursor-default" 
-                          // STYLE LANJUT BELAJAR (Hijau Solid - Sama seperti di Home)
                           : "bg-green-500 text-white hover:bg-green-600 hover:shadow-lg hover:-translate-y-0.5" 
                       }`}
                     >
@@ -190,7 +172,6 @@ export default async function CourseDetail({ params }: PageProps) {
                            <span>Kursus Selesai</span>
                          </>
                        ) : (
-                         // Arahkan ke halaman belajar / materi pertama
                          <Link href={`/courses/${course.id}/learn`} className="flex items-center gap-2 w-full justify-center">
                             <HiPlay className="text-xl" />
                             <span>Lanjutkan Belajar</span>
@@ -198,7 +179,6 @@ export default async function CourseDetail({ params }: PageProps) {
                        )}
                     </button>
                  ) : (
-                    // 2. JIKA BELUM DAFTAR (Tombol Default)
                     <CourseCardButton 
                         courseId={course.id} 
                         userId={user?.id} 
@@ -213,9 +193,7 @@ export default async function CourseDetail({ params }: PageProps) {
                     }
                 </p>
               </div>
-              {/* === LOGIC TOMBOL SELESAI === */}
 
-              {/* Detail List */}
               <div>
                 <h4 className="font-bold text-sm mb-4 text-[#2e385b]">Detail Kursus</h4>
                 <ul className="space-y-4 text-xs font-medium text-gray-600">

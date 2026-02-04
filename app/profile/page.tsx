@@ -2,14 +2,13 @@ import React from 'react';
 import { getSessionUser } from '@/app/lib/auth';
 import { redirect } from 'next/navigation';
 import Footer from '@/app/component/Footer';
-import Image from 'next/image'; // Ini sudah benar
-import Link from 'next/link';   // TADI SALAH DISINI (Tadi tertulis Image)
+import Image from 'next/image'; 
+import Link from 'next/link';   
 import { HiUser, HiMail, HiBadgeCheck, HiShieldCheck } from 'react-icons/hi';
 
 export default async function ProfilePage() {
   const user = await getSessionUser();
 
-  // Jika belum login, tendang ke halaman auth
   if (!user) redirect('/auth');
 
   return (

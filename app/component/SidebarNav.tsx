@@ -3,7 +3,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-// 1. IMPORT ICON BARU (HiCollection)
 import { HiChartPie, HiBookOpen, HiUsers, HiChatAlt2, HiHome, HiCollection } from 'react-icons/hi';
 
 export default function SidebarNav() {
@@ -12,10 +11,7 @@ export default function SidebarNav() {
   const menuItems = [
     { name: 'Dashboard', href: '/admin', icon: HiChartPie },
     { name: 'Manajemen Kursus', href: '/admin/courses', icon: HiBookOpen },
-    
-    // 2. TAMBAHKAN MENU KATEGORI DI SINI (Supaya dekat dengan Kursus)
     { name: 'Kategori', href: '/admin/categories', icon: HiCollection },
-    
     { name: 'Pengguna', href: '/admin/users', icon: HiUsers },
     { name: 'Komentar', href: '/admin/comments', icon: HiChatAlt2 },
   ];
@@ -24,7 +20,7 @@ export default function SidebarNav() {
     <nav className="flex-1 p-4 space-y-2 overflow-y-auto flex flex-col">
       
       {menuItems.map((item) => {
-        // Logika active state
+        
         const isActive = item.href === '/admin' 
           ? pathname === item.href 
           : pathname.startsWith(item.href);

@@ -1,14 +1,13 @@
 import React from 'react';
-import { getSessionUser } from '@/app/lib/auth'; // Pastikan path import ini benar (@/...)
-import { logout } from '@/app/actions/auth';     // Pastikan path import ini benar (@/...)
+import { getSessionUser } from '@/app/lib/auth';
+import { logout } from '@/app/actions/auth';    
 import { HiLogout } from 'react-icons/hi';
-import SidebarNav from './SidebarNav'; // <--- Ini yang memuat menu Kategori baru tadi
+import SidebarNav from './SidebarNav';
 
 export default async function Sidebar() {
-  // 1. Ambil Data User (Server Side)
+
   const user = await getSessionUser();
   
-  // Avatar fallback
   const userImage = user?.image || `https://ui-avatars.com/api/?name=${user?.name || 'Admin'}&background=0D8ABC&color=fff`;
 
   return (
@@ -34,7 +33,6 @@ export default async function Sidebar() {
       </div>
 
       {/* 2. MENU NAVIGASI (Client Component) */}
-      {/* Menu 'Kategori' sudah ada di dalam komponen ini */}
       <SidebarNav />
 
       {/* 3. TOMBOL LOGOUT (Server Action) */}

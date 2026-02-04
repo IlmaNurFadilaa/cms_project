@@ -16,16 +16,14 @@ export default function UserForm({ initialData }: UserFormProps) {
   const isEdit = !!initialData;
   const action = isEdit ? updateUser : createUser;
 
-  // State untuk Toggle Password
   const [showPassword, setShowPassword] = useState(false);
 
-  // Preview Image Logic
   const [preview, setPreview] = useState<string | null>(initialData?.image || null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 2 * 1024 * 1024) { // Limit 2MB
+      if (file.size > 2 * 1024 * 1024) { 
         alert("File terlalu besar (Max 2MB)");
         e.target.value = "";
         return;
@@ -87,7 +85,7 @@ export default function UserForm({ initialData }: UserFormProps) {
             />
           </div>
 
-          {/* === INPUT PASSWORD DENGAN ICON MATA === */}
+          {/* === INPUT PASSWORD === */}
           <div>
             <label className="block text-sm font-bold mb-2 ml-1">
               Password
@@ -96,7 +94,6 @@ export default function UserForm({ initialData }: UserFormProps) {
             <div className="relative">
               <input 
                 name="password" 
-                // Ubah type dinamis: kalau showPassword=true jadi 'text', kalau false jadi 'password'
                 type={showPassword ? "text" : "password"} 
                 placeholder={isEdit ? "Biarkan kosong jika tidak diganti" : "Masukkan password..."}
                 className="w-full p-4 pr-12 rounded-xl border border-gray-200 bg-[#f8fafc] text-[#2e385b] focus:ring-2 focus:ring-[#2e385b] outline-none transition" 
@@ -104,16 +101,15 @@ export default function UserForm({ initialData }: UserFormProps) {
                 minLength={6}
               />
               
-              {/* Tombol Mata (Absolute Position) */}
               <button
-                type="button" // PENTING: Supaya tidak mensubmit form saat diklik
+                type="button" 
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#2e385b] transition"
               >
                 {showPassword ? (
-                  <HiEyeOff className="w-5 h-5" /> // Icon Mata Silang (Sembunyi)
+                  <HiEyeOff className="w-5 h-5" /> 
                 ) : (
-                  <HiEye className="w-5 h-5" />    // Icon Mata Biasa (Lihat)
+                  <HiEye className="w-5 h-5" />    
                 )}
               </button>
             </div>
@@ -133,7 +129,7 @@ export default function UserForm({ initialData }: UserFormProps) {
                 defaultValue={initialData?.role || 'USER'} 
                 className="w-full p-4 rounded-xl border border-gray-200 bg-[#f8fafc] text-[#2e385b] outline-none appearance-none cursor-pointer focus:ring-2 focus:ring-[#2e385b]"
               >
-                {/* HANYA SISAKAN DUA INI */}
+                
                 <option value="USER">User (Murid)</option>
                 <option value="ADMIN">Admin</option>
               </select>

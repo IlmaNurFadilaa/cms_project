@@ -1,31 +1,23 @@
-'use client'; // <--- WAJIB: Agar bisa baca URL (usePathname)
+'use client'; 
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-// Menggunakan library react-icons
 import { FaInstagram, FaFacebookF } from 'react-icons/fa';
 import { TbWorld } from 'react-icons/tb';
 
 export default function Footer() {
   const pathname = usePathname();
 
-  // === LOGIC: Sembunyikan Footer di halaman tertentu ===
-  // Footer akan hilang jika URL diawali dengan:
-  // 1. /admin (Halaman Admin)
-  // 2. /auth (Halaman Login/Register)
-  // 3. /profile/edit (Halaman Edit Profil - Form Only)
   const isHidden = pathname && (
     pathname.startsWith('/admin') || 
     pathname.startsWith('/auth') || 
     pathname.startsWith('/profile/edit')
   );
 
-  // Jika kondisi di atas benar, jangan tampilkan apa-apa (return null)
   if (isHidden) {
     return null;
   }
 
-  // === TAMPILAN ASLI (TIDAK DIUBAH) ===
   return (
     <footer className="bg-gray-200 border-t border-gray-200 py-16">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-10">

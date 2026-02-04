@@ -1,7 +1,6 @@
 import React from 'react';
 import { prisma } from '@/app/lib/prisma';
 import CategoryRow from '@/app/component/CategoryRow';
-// Import komponen tombol baru kita
 import AddCategoryButton from '@/app/component/AddCategoryButton';
 
 export default async function AdminCategoriesPage() {
@@ -25,7 +24,6 @@ export default async function AdminCategoriesPage() {
              <p className="text-sm text-gray-400">Kelola topik pembelajaran yang tersedia.</p>
           </div>
           
-          {/* Gunakan Komponen Tombol Modal di sini */}
           <AddCategoryButton />
         </div>
 
@@ -35,7 +33,7 @@ export default async function AdminCategoriesPage() {
               <tr className="border-b border-gray-100 text-gray-400 text-xs font-bold uppercase tracking-wider">
                 <th className="p-4 w-16">No</th>
                 <th className="p-4">Nama Kategori</th>
-                {/* UBAH HEADER DI SINI */}
+                
                 <th className="p-4">Total Kursus</th>
                 <th className="p-4 text-right">Aksi</th>
               </tr>

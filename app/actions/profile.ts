@@ -12,9 +12,9 @@ export async function updateProfileAction(formData: FormData) {
   const name = formData.get('name') as string;
   const imageFile = formData.get('image') as File;
 
-  let imagePath = user.image; // Gunakan foto lama sebagai default
+  let imagePath = user.image; 
 
-  // Logika Upload Foto (Sama seperti Register)
+  // Logika Upload Foto 
   if (imageFile && imageFile.size > 0) {
     try {
       const bytes = await imageFile.arrayBuffer();

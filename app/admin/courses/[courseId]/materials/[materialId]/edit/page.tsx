@@ -20,7 +20,6 @@ export default async function EditMaterialPage({
     <div className="min-h-screen bg-[#f4f6f9] text-[#2e385b] p-8">
       <div className="max-w-3xl mx-auto">
 
-        {/* Form dengan Data Awal */}
         <MaterialForm courseId={courseId} initialData={material} />
 
       </div>

@@ -4,7 +4,6 @@ import { notFound, redirect } from 'next/navigation';
 import { prisma } from '@/app/lib/prisma';
 import { getSessionUser } from '@/app/lib/auth';
 
-// Components
 import CompleteButton from '@/app/component/CompleteButton'; 
 
 import { HiChevronLeft, HiChevronRight, HiPlay, HiMenuAlt3 } from 'react-icons/hi';
@@ -17,11 +16,8 @@ export default async function LearningPlayerPage({ params }: PageProps) {
   const { courseId, materialId } = await params;
   const user = await getSessionUser();
 
-  // 1. Cek Login
   if (!user) redirect('/auth');
 
-  // 2. PROTEKSI HALAMAN (SECURITY CHECK)
-  // Cek apakah user sudah terdaftar di kursus ini
   const enrollment = await prisma.enrollment.findUnique({
     where: {
       userId_courseId: {
@@ -31,18 +27,15 @@ export default async function LearningPlayerPage({ params }: PageProps) {
     }
   });
 
-  // JIKA BELUM DAFTAR -> TENDANG KEMBALI KE HALAMAN DETAIL KURSUS
   if (!enrollment) {
     redirect(`/courses/${courseId}`);
   }
 
-  // 3. Ambil Progress & Status Materi Ini
   const progress = await prisma.userProgress.findUnique({
     where: { userId_materialId: { userId: user.id, materialId: materialId } },
   });
   const isCompleted = progress?.isCompleted || false;
 
-  // 4. Hitung Statistik Progress
   const completedCount = await prisma.userProgress.count({
     where: {
       userId: user.id,
@@ -51,7 +44,6 @@ export default async function LearningPlayerPage({ params }: PageProps) {
     }
   });
 
-  // 5. Ambil Data Kursus & Materi
   const course = await prisma.course.findUnique({
     where: { id: courseId },
     include: {
@@ -66,7 +58,6 @@ export default async function LearningPlayerPage({ params }: PageProps) {
 
   if (!currentMaterial) notFound();
 
-  // Logic Next/Prev Button
   const prevMaterial = currentIndex > 0 ? course.materials[currentIndex - 1] : null;
   const nextMaterial = currentIndex < course.materials.length - 1 ? course.materials[currentIndex + 1] : null;
 

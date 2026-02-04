@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Category } from '@prisma/client';
-// Hapus import HiTag karena tidak dipakai lagi
 import GenericDeleteButton from '@/app/component/AdminDeleteButton';
 import { deleteCategory } from '@/app/actions/categories';
 
@@ -31,9 +30,9 @@ export default function CategoryRow({ category, index }: Props) {
          #{index + 1}
       </td>
 
-      {/* NAMA KATEGORI (Ikon Dihapus) */}
+      {/* NAMA KATEGORI */}
       <td className="p-4">
-         {/* Div pembungkus ikon dihapus, langsung tampilkan nama */}
+         
          <span className="font-bold text-[#2e385b] text-lg">
             {category.name}
          </span>
