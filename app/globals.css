@@ -1,17 +1,35 @@
+/* Mengimpor Font Poppins dari Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+/* Mengimpor Tailwind CSS */
 @import "tailwindcss";
 
+/* Pastikan background html tidak hitam */
+html,
+body {
+  background-color: #f3f4f6; /* Abu muda senada navbar */
+  /* Mematikan efek bounce/overscroll agar navbar tetap diam */
+  overscroll-behavior-y: none;
+  scroll-behavior: smooth;
+}
+
+/* Pengaturan root untuk variabel global */
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: "Poppins", sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
+/* Pengaturan tema inline */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+/* Media query untuk tema gelap */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -19,8 +37,9 @@
   }
 }
 
+/* Pengaturan umum body */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }

@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// --- ENUM ---
+enum Level {
+  PEMULA
+  MENENGAH
+  LANJUTAN
+  SEMUA_LEVEL
+}
+
+enum VideoType {
+  YOUTUBE
+  UPLOAD
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+// --- MODELS ---
+
+model User {
+  id        String   @id // <-- DEFAULT DIHAPUS
+  name      String?
+  email     String   @unique
+  password  String
+  role      Role     @default(USER) 
+  image     String?  
+  createdAt DateTime @default(now())
+
+  comments    Comment[]
+  enrollments Enrollment[]
+  progress    UserProgress[]
+}
+
+model Category {
+  id      String   @id // <-- DEFAULT DIHAPUS
+  name    String   @unique
+  courses Course[]
+}
+
+model Course {
+  id          String   @id // <-- DEFAULT DIHAPUS
+  title       String
+  description String   @db.Text
+  image       String?
+  level       Level    @default(PEMULA) 
+  isPublished Boolean  @default(true) 
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+
+  materials   Material[]
+  enrollments Enrollment[]
+}
+
+model Material {
+  id          String    @id // <-- DEFAULT DIHAPUS
+  title       String    
+  description String    @db.Text 
+  videoType   VideoType @default(YOUTUBE) 
+  videoUrl    String    
+  createdAt   DateTime  @default(now())
+
+  courseId    String
+  course      Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  comments    Comment[]
+  progress    UserProgress[]
+}
+
+// --- MODEL LAIN (Biarkan panjang tidak apa-apa karena tidak masuk URL) ---
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  materialId String
+  material   Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+}
+
+model Enrollment {
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  @@unique([userId, courseId])
+}
+
+model UserProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  materialId  String
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  material    Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  @@unique([userId, materialId])
+}
