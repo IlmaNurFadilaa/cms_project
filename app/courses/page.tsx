@@ -1,14 +1,20 @@
 import React from 'react';
-import { prisma } from '../lib/prisma';
-import CourseCard from '../component/CourseCard';
-import { getSessionUser } from '../lib/auth';
-import Footer from '../component/Footer';
+import { prisma } from '@/app/lib/prisma';
+import { getSessionUser } from '@/app/lib/auth';
+import CourseCatalog from '@/app/component/CourseCatalog'; // Pastikan path import ini benar
+import Footer from '@/app/component/Footer';
 
 export const dynamic = 'force-dynamic'; 
 
 export default async function CoursesPage() {
   const user = await getSessionUser();
 
+  // 1. Ambil Data Kategori untuk Sidebar
+  const categories = await prisma.category.findMany({
+    orderBy: { name: 'asc' }
+  });
+
+  // 2. Ambil Data Kursus
   const rawCourses = await prisma.course.findMany({
     orderBy: { createdAt: 'desc' },
     include: {
@@ -19,6 +25,7 @@ export default async function CoursesPage() {
     where: { isPublished: true }
   });
 
+  // 3. Hitung logika 'isCompleted' di server biar cepat
   const courses = await Promise.all(rawCourses.map(async (course) => {
     let isCompleted = false;
     if (user && course.enrollments.length > 0) {
@@ -39,21 +46,12 @@ export default async function CoursesPage() {
 
   return (
     <div className="bg-white min-h-screen flex flex-col">
-       <div className="flex-1 max-w-7xl mx-auto px-6 py-12 w-full mt-16">
-          <h1 className="text-3xl font-extrabold text-[#2e385b] mb-8">All Courses</h1>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {courses.map((course) => (
-              <CourseCard 
-                key={course.id} 
-                course={course} 
-                user={user} 
-                isEnrolled={user ? course.enrollments.length > 0 : false}
-                isCompleted={course.isCompleted} 
-              />
-            ))}
-          </div>
-       </div>
+       {/* Kita oper data ke Client Component untuk urusan layout & search */}
+       <CourseCatalog 
+          initialCourses={courses} 
+          categories={categories} 
+          userId={user?.id} 
+       />
        <Footer />
     </div>
   );
